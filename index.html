@@ -757,8 +757,8 @@ fab.addEventListener('click',open);X.addEventListener('click',close);
 R.addEventListener('click',function(e){if(e.target===R)close()});
 addEventListener('keydown',function(e){if(e.key==='Escape'&&R.classList.contains('on'))close()});
 F.addEventListener('submit',function(e){e.preventDefault();if(Go.disabled)return;var s=val('ses'),m=val('mod'),h=val('hor'),t;
-var L=[];if(en()){var HE={m:'morning',t:'afternoon'};L.push('Hi Flor 🌀','I would like to book a session through afloraconsciencia.com','','• *Session:* '+(s==='yin'?'Yin Yoga':'Access Bars'),'• *Format:* '+(m==='online'?'Online':'In person ('+LUGAR+')'),'• *Preferred time:* '+(h?HE[h]:'flexible'),'','Which days do you have available?')}
-else{var HS={m:'por la mañana',t:'por la tarde'};L.push('Hola Flor 🌀','Quisiera reservar una sesión desde afloraconsciencia.com','','• *Sesión:* '+(s==='yin'?'Yin Yoga':'Barras de Access'),'• *Modalidad:* '+(m==='online'?'Online':'Presencial ('+LUGAR+')'),'• *Horario:* '+(h?HS[h]:'a coordinar'),'','¿Qué días tenés disponibles?')}
+var L=[];if(en()){var HE={m:'morning',t:'afternoon'};L.push('Hi Flor,','I would like to book a session through afloraconsciencia.com','','• *Session:* '+(s==='yin'?'Yin Yoga':'Access Bars'),'• *Format:* '+(m==='online'?'Online':'In person ('+LUGAR+')'),'• *Preferred time:* '+(h?HE[h]:'flexible'),'','Which days do you have available?')}
+else{var HS={m:'por la mañana',t:'por la tarde'};L.push('Hola Flor,','Quisiera reservar una sesión desde afloraconsciencia.com','','• *Sesión:* '+(s==='yin'?'Yin Yoga':'Barras de Access'),'• *Modalidad:* '+(m==='online'?'Online':'Presencial ('+LUGAR+')'),'• *Horario:* '+(h?HS[h]:'a coordinar'),'','¿Qué días tenés disponibles?')}
 t=L.join('\n');
 var u='https://wa.me/'+TEL+'?text='+encodeURIComponent(t);var w=window.open(u,'_blank','noopener');if(!w)location.href=u;close()});
 })();</script>
