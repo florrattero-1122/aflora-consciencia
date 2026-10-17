@@ -1022,7 +1022,7 @@ setTimeout(todo,80);
 <canvas class="fq-cielo" aria-hidden="true"></canvas><script id="faq-cielo-js">(function(){
 var c=document.querySelector('.fq-cielo');if(!c)return;var x=c.getContext('2d'),st=[],W=0,H=0,run=false,RM=matchMedia('(prefers-reduced-motion: reduce)').matches;
 function on(){return document.body.dataset.page==='faq'}
-function sz(){var d=Math.min(2,devicePixelRatio||1);W=innerWidth;H=innerHeight;c.width=W*d;c.height=H*d;x.setTransform(d,0,0,d,0,0);var s=19,r=function(){s=(s*1664525+1013904223)>>>0;return s/4294967296};st=[];for(var i=0;i<Math.round(W*H/9000);i++)st.push({x:r()*W,y:r()*H,r:r()*1.4+.35,a:r()*.55+.22,p:r()*6.3,f:r()*.6+.4})}
+function sz(){var d=Math.min(2,devicePixelRatio||1);W=innerWidth;H=innerHeight;c.width=W*d;c.height=H*d;x.setTransform(d,0,0,d,0,0);var s=19,r=function(){s=(s*1664525+1013904223)>>>0;return s/4294967296};st=[];for(var i=0;i<Math.round(W*H/9000);i++)st.push({x:r()*W,y:r()*H,r:r()*1.1+.25,a:r()*.32+.1,p:r()*6.3,f:r()*.6+.4})}
 function pin(t){if(!on()){run=false;return}x.clearRect(0,0,W,H);st.forEach(function(s){var a=RM?s.a:s.a*(.55+.45*Math.sin((t||0)/(1100*s.f)+s.p));x.fillStyle='rgba(243,238,240,'+a.toFixed(3)+')';x.beginPath();x.arc(s.x,((s.y-scrollY*.15)%H+H)%H,s.r,0,7);x.fill()});requestAnimationFrame(pin)}
 function go(){if(on()&&!run){run=true;sz();requestAnimationFrame(pin)}}
 addEventListener('resize',function(){if(on())sz()});addEventListener('hashchange',function(){setTimeout(go,60)});setTimeout(go,100);
