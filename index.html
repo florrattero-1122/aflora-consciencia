@@ -1374,5 +1374,6 @@ for(var k=1;k<L.length;k++){var a=L[k-1],b=L[k];if(!a[0]||!b[0])continue;a[a.len
 var tm;function later(){clearTimeout(tm);tm=setTimeout(run,150)}
 addEventListener('load',later);addEventListener('resize',later);addEventListener('hashchange',function(){setTimeout(run,60);setTimeout(run,700)});if(document.fonts&&document.fonts.ready)document.fonts.ready.then(later);setTimeout(run,500);setTimeout(run,1600);
 document.querySelectorAll('.pfoto img').forEach(function(i){if(!i.complete)i.addEventListener('load',later)});
+if('ResizeObserver' in window){var ro=new ResizeObserver(later);['#barras','#yin-yoga'].forEach(function(id){var sec=document.querySelector(id);if(!sec)return;[].forEach.call(sec.children,function(c){ro.observe(c)})})}
 })();</script></body>
 </html>
