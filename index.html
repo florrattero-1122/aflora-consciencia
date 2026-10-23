@@ -1314,11 +1314,11 @@ function run(){if(document.body.dataset.page!=='inicio')return;var G=Math.max(70
  A=bx(p3);B=bx(nv);if(A&&B)set(nv,G-(B.t+B.h*.052-A.b));
  A=bx(nv);B=bx(as[0]);if(A&&B)set(as[0],G-(B.t-(A.t+A.h*.932)));
  A=bx(as[as.length-1]);B=bx(mc);if(A&&B)set(mb,G-(B.t+B.h*.1-A.b));
- A=bx(mc);B=bx(so);if(A&&B)set(so,G-(B.t+22-(A.b-A.h*.1)));
+ A=bx(mc);B=bx(so);var mi=bx(q('#inicio .moon-in')),lo=A?A.b-A.h*.1:0;if(mi&&mi.b>lo)lo=mi.b;if(A&&B)set(so,G-(B.t+22-lo));
 }
 var tm;function later(){clearTimeout(tm);tm=setTimeout(run,120)}
 if(document.fonts&&document.fonts.ready)document.fonts.ready.then(later);
-addEventListener('load',later);addEventListener('resize',later);addEventListener('hashchange',later);setTimeout(run,400);setTimeout(run,1500);
+addEventListener('load',later);var mcv=document.getElementById('moonc');if(mcv)mcv.addEventListener('moonready',later);if('ResizeObserver' in window){var ro=new ResizeObserver(later);['#inicio .moon-in','#inicio .about','#inicio .moonbox'].forEach(function(sl){var el=document.querySelector(sl);if(el)ro.observe(el)})}addEventListener('resize',later);addEventListener('hashchange',later);setTimeout(run,400);setTimeout(run,1500);
 })();</script><script id="neurona-barras">(function(){var c=document.getElementById('neu');if(!c)return;var x=c.getContext('2d'),DPR=Math.min(1.75,devicePixelRatio||1),RM=matchMedia('(prefers-reduced-motion:reduce)').matches,W,H,run=false,B=[],seed=5;
 function rnd(){seed=(seed*16807)%2147483647;return seed/2147483647}function rr(a,b){return a+rnd()*(b-a)}
 function br(x0,y0,ang,len,d,out){var x1=x0+Math.cos(ang)*len,y1=y0+Math.sin(ang)*len,cx=(x0+x1)/2+Math.cos(ang+1.57)*len*rr(-.25,.25),cy=(y0+y1)/2+Math.sin(ang+1.57)*len*rr(-.25,.25);out.push({a:[x0,y0],c:[cx,cy],b:[x1,y1],w:d,o:out.length});if(d>0){var n=d>2?2:rnd()<.6?2:1;for(var i=0;i<n;i++)br(x1,y1,ang+rr(-.7,.7),len*rr(.62,.8),d-1,out)}return out}
