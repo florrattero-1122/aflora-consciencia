@@ -932,7 +932,7 @@ html body #barras .spriv .sp-pago:hover,html body #barras .spriv .sp-pago:focus-
 .reserva.on .rv-box{animation:rvIn .42s cubic-bezier(.2,.7,.2,1) both}
 @keyframes rvOut{from{opacity:1;transform:none}to{opacity:0;transform:translateY(-6px) scale(.985)}}.reserva.on .rv-box.rv-sale{animation:rvOut .22s ease forwards}.reserva.rv-ya{transition:none!important}:is(#resB,#aplicar,#reserva) .rb-card[hidden]{display:none!important}
 #reserva #rvMod:not([hidden]),#reserva #rvBan:not([hidden]),#reserva #rvLug:not([hidden]){animation:rvAp .45s ease backwards}
-.reserva.on .rv-box.rv-host{animation:none}.rv-box.rv-cambio>*:not(.rv-x){animation:rvAp .4s ease backwards}
+.reserva.on .rv-box.rv-host{animation:none}.rv-box.rv-cambio>*:not(.rv-x){animation:rvAp .5s ease backwards}.rv-box.rv-cambio>*:nth-child(n+5){animation-delay:.06s}.rv-box.rv-keepban.rv-cambio>.rb-ban{animation:none}@keyframes rvSal{to{opacity:0;transform:translateY(-4px)}}.rv-box.rv-sal>*:not(.rv-x){animation:rvSal .18s ease forwards}.rv-box.rv-sal.rv-keepban>.rb-ban{animation:none}
 @media(prefers-reduced-motion:reduce){.reserva.on .rv-box,#reserva #rvMod,#reserva #rvBan,#reserva #rvLug{animation:none}}</style>
 <style id="rv-volver">.rv-box .rv-back{right:auto;left:14px}.rv-box .rv-back[hidden]{display:none}</style>
 </head>
@@ -1545,10 +1545,11 @@ var RB=document.getElementById('resB'),RA=document.getElementById('aplicar'),FB=
 var B0=document.getElementById('rvBack'),BB=document.getElementById('rbBack'),BA=document.getElementById('apBack');
 var RM=matchMedia('(prefers-reduced-motion:reduce)').matches,host=null,home=null;
 function cur(){return host||F}
-function alto(box,h0){if(RM)return;var h1=box.getBoundingClientRect().height;if(Math.abs(h1-h0)<2)return;box.style.height=h0+'px';box.style.overflow='hidden';box.offsetHeight;box.style.transition='height .38s cubic-bezier(.3,.7,.2,1)';box.style.height=h1+'px';setTimeout(function(){box.style.height='';box.style.transition='';box.style.overflow=''},420)}
+function alto(box,h0){if(RM)return;var h1=box.getBoundingClientRect().height;if(Math.abs(h1-h0)<2)return;box.style.height=h0+'px';box.style.overflow='hidden';box.offsetHeight;box.style.transition='height .48s cubic-bezier(.3,.7,.2,1)';box.style.height=h1+'px';setTimeout(function(){box.style.height='';box.style.transition='';box.style.overflow=''},520)}
 function entra(box){if(RM)return;box.classList.remove('rv-cambio');box.offsetWidth;box.classList.add('rv-cambio')}
-function alojar(Ff,Rr,prep){var h0=cur().getBoundingClientRect().height;prep();Rr.classList.remove('on');Rr.setAttribute('aria-hidden','true');home=Rr;host=Ff;Ff.classList.add('rv-host');R.appendChild(Ff);F.style.display='none';entra(Ff);alto(Ff,h0)}
-function devolver(anim){if(!host)return;var h0=host.getBoundingClientRect().height,f=host;f.classList.remove('rv-host','rv-cambio');home.appendChild(f);host=null;home=null;F.style.display='';if(anim){entra(F);alto(F,h0)}}
+function alojar(Ff,Rr,prep){var old=cur(),h0=old.getBoundingClientRect().height,ob=old.querySelector('.rb-ban:not([hidden])'),nb=Ff.querySelector('.rb-ban'),keep=!!(ob&&nb&&((ob.classList.contains('ph-y')&&nb.classList.contains('ph-y'))||(ob.classList.contains('ph-b')&&nb.classList.contains('ph-b'))));old.classList.toggle('rv-keepban',keep);old.classList.add('rv-sal');
+setTimeout(function(){old.classList.remove('rv-sal','rv-keepban');prep();Rr.classList.remove('on');Rr.setAttribute('aria-hidden','true');home=Rr;host=Ff;Ff.classList.add('rv-host');Ff.classList.toggle('rv-keepban',keep);old.style.minHeight='';R.appendChild(Ff);F.style.display='none';entra(Ff);alto(Ff,h0)},RM?0:190)}
+function devolver(anim){if(!host)return;var h0=host.getBoundingClientRect().height,f=host;f.classList.remove('rv-host','rv-cambio','rv-keepban');home.appendChild(f);host=null;home=null;F.style.display='';if(anim){entra(F);alto(F,h0)}}
 function aInicio(){var h0=cur().getBoundingClientRect().height;var hadHost=!!host;devolver(false);F.reset();F.dispatchEvent(new Event('change',{bubbles:true}));var b=document.getElementById('rvBan');if(b)b.hidden=true;if(B0)B0.hidden=true;var M=document.getElementById('rvMod');if(M)M.hidden=true;entra(F);alto(F,h0)}
 new MutationObserver(function(){if(!R.classList.contains('on')&&host)devolver(false)}).observe(R,{attributes:true,attributeFilter:['class']});
 function cerrarR(){R.classList.remove('on');R.setAttribute('aria-hidden','true')}
@@ -1561,7 +1562,7 @@ function vB(){if(B0)B0.hidden=gr()||!F.querySelector('input[name="ses"]:checked'
 var h0=0;F.addEventListener('change',function(){h0=F.getBoundingClientRect().height},true);
 F.addEventListener('change',function(e){vB();var t=e.target;
 if(!gr()&&t.name==='ses'&&t.value==='barras'&&oB){var M=document.getElementById('rvMod');if(M)M.hidden=true;setTimeout(function(){alojar(FB,RB,function(){oB(null);if(BB)BB.hidden=false})},200);return}
-if(!gr()&&t.name==='mod'&&t.value==='online'){var y=F.querySelector('input[name="ses"][value="yin"]');if(y&&y.checked&&oA){setTimeout(function(){alojar(FA,RA,function(){oA(null);if(BA)BA.hidden=false})},200);return}}
+if(!gr()&&t.name==='mod'&&t.value==='online'){var y=F.querySelector('input[name="ses"][value="yin"]');if(y&&y.checked&&oA){var Cc=document.getElementById('rvCic');if(Cc)Cc.hidden=true;var Lg=document.getElementById('rvLug');if(Lg)Lg.hidden=true;setTimeout(function(){alojar(FA,RA,function(){oA(null);if(BA)BA.hidden=false})},200);return}}
 if(t.name==='ses'||t.name==='mod'){var hh=h0;requestAnimationFrame(function(){alto(F,hh)})}});
 if(fab)fab.addEventListener('click',function(){devolver(false);F.reset();var b=document.getElementById('rvBan');if(b)b.hidden=true;setTimeout(vB,0)},true);var oC=window.abrirReservaClase;if(oC)window.abrirReservaClase=function(){devolver(false);var r=oC.apply(this,arguments);if(B0)B0.hidden=true;return r};
 if(B0)B0.addEventListener('click',aInicio);if(BB)BB.addEventListener('click',aInicio);if(BA)BA.addEventListener('click',aInicio);
