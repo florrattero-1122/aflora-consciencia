@@ -1223,11 +1223,11 @@ g.globalCompositeOperation='source-over';
 var d=g.getImageData(0,0,S,S).data,a=[],ed=[];function on(xx,y){return xx>=0&&y>=0&&xx<S&&y<S&&d[(y*S+xx)*4+3]>128}
 for(var y=0;y<S;y++)for(var xx=0;xx<S;xx++)if(on(xx,y)){a.push([xx/S,y/S]);if(!on(xx-1,y)||!on(xx+1,y)||!on(xx,y-1)||!on(xx,y+1))ed.push([xx/S,y/S])}SILE=ed;return a}
 var SILE=[];var SIL=silhouette(420);
-function build(){W=c.clientWidth;H=c.clientHeight;if(!W||!H)return;c.width=Math.round(W*DPR);c.height=Math.round(H*DPR);var n=W<600?2800:4200,fs=Math.min(H*.74,W*1.05),ox=W/2-fs/2,oy=H*.5-fs*.47;pts=[];
-var hx=W/2,hy=oy+fs*.45;for(var i=0;i<n;i++){var s,hd;do{s=SIL[(Math.random()*SIL.length)|0];var ddx=s[0]-.5,ddy=s[1]-.42;hd=Math.sqrt(ddx*ddx+ddy*ddy)}while(Math.random()>Math.exp(-hd*5.5)+.08);var isE=false,px=ox+(s[0]+rnd(-.002,.002))*fs,py=oy+(s[1]+rnd(-.002,.002))*fs;
+function build(){W=c.clientWidth;H=c.clientHeight;if(!W||!H)return;c.width=Math.round(W*DPR);c.height=Math.round(H*DPR);var MOB=W<600,n=MOB?3800:4200,fs=Math.min(H*.74,W*(MOB?1.12:1.05)),ox=W/2-fs/2,oy=H*.5-fs*.47;pts=[];
+var hx=W/2,hy=oy+fs*.45;for(var i=0;i<n;i++){var s,hd;if(MOB&&SILE.length&&Math.random()<.24){s=SILE[(Math.random()*SILE.length)|0];var ex=s[0]-.5,ey=s[1]-.42;hd=Math.sqrt(ex*ex+ey*ey)}else{do{s=SIL[(Math.random()*SIL.length)|0];var ddx=s[0]-.5,ddy=s[1]-.42;hd=Math.sqrt(ddx*ddx+ddy*ddy)}while(Math.random()>Math.exp(-hd*(MOB?3.6:5.5))+(MOB?.16:.08))}var isE=false,px=ox+(s[0]+rnd(-.002,.002))*fs,py=oy+(s[1]+rnd(-.002,.002))*fs;
 var arm=i%4,r=Math.pow(Math.random(),.6),ang=arm*1.5708+r*5.2+rnd(-.35,.35)*(1.1-r);var R=Math.max(W,H)*.62*r+20;var BL=Math.hypot(W,H)*.62,BW=Math.min(H,W)*.11,bu,bv;if(Math.random()<.28){bu=gs()*BL*.16;bv=gs()*BW*1.15}else{bu=rnd(-1,1)*BL;bv=gs()*BW*(1-.35*Math.abs(bu)/BL)}var lane=BW*.28*Math.sin(bu/BL*3.2);if(Math.abs(bv-lane)<BW*.32&&Math.random()<.65)bv=lane+(bv>lane?1:-1)*(BW*.32+Math.random()*BW*.5);
 var d=Math.hypot(px-hx,py-hy)/fs;var col=Math.random()<.55?PAL[3]:PAL[(Math.random()*3)|0];
-pts.push({e:isE,hd:hd,bu:bu,bv:bv,hx:px,hy:py,r:R,a:ang,w:(.00006+.00016*(1-r))*(Math.random()<.5?1:1),d:d,off:rnd(0,.18),s:rnd(.6,1.7),c:col,tw:rnd(0,6.28),z:rnd(.4,1)})}
+pts.push({e:isE,hd:hd,bu:bu,bv:bv,hx:px,hy:py,r:R,a:ang,w:(.00006+.00016*(1-r))*(Math.random()<.5?1:1),d:d,off:rnd(0,.18),s:MOB?rnd(.55,1.35):rnd(.6,1.7),c:col,tw:rnd(0,6.28),z:rnd(.4,1)})}
 BS=[];for(i=0;i<Math.round(W*H/1600);i++)BS.push({x:Math.random()*W,y:Math.random()*H,r:Math.pow(Math.random(),3)*1.2+.3,o:rnd(.2,.8),tw:rnd(0,6.28),sp:rnd(.6,2)})}
 var CY=22000;
 function phase(t){var p=(t%CY)/CY;// 0-.18 figure, .18-.5 dissolve, .5-.72 cosmos, .72-1 return
@@ -1243,7 +1243,7 @@ if(P.in){var dx=X-P.x,dy=Y-P.y,dd=dx*dx+dy*dy,R2=6400;if(dd<R2){var f=(1-dd/R2)*
 var tw=.65+.35*Math.sin(t*.003+q.tw),al=(mi<.5?Math.max(.12,.95-q.hd):.55+.35*q.z)*tw,cc=mi<.3?PAL[3]:q.c,sz=q.s*(1+mi*.5*q.z);x.fillStyle='rgba('+cc[0]+','+cc[1]+','+cc[2]+','+al.toFixed(3)+')';x.fillRect(X,Y,sz,sz)}
 x.globalCompositeOperation='source-over'}
 function loop(n){if(!run)return;var dt=n-(last||n);last=n;if(!W||c.clientWidth!==W||c.clientHeight!==H)build();frame(n-t0);if(!RM)requestAnimationFrame(loop);else run=false}
-var box=c.parentNode;box.addEventListener('pointermove',function(e){var r=c.getBoundingClientRect();P.x=e.clientX-r.left;P.y=e.clientY-r.top;P.in=true});box.addEventListener('pointerleave',function(){P.in=false});
+var box=c.parentNode;box.addEventListener('pointermove',function(e){if(e.pointerType==='touch'){P.in=false;return}var r=c.getBoundingClientRect();P.x=e.clientX-r.left;P.y=e.clientY-r.top;P.in=true});box.addEventListener('pointerleave',function(){P.in=false});
 build();frame(0);if('IntersectionObserver' in window){new IntersectionObserver(function(en){if(en[0].isIntersecting){if(!run){run=true;last=0;requestAnimationFrame(loop)}}else run=false}).observe(c)}else{run=true;requestAnimationFrame(loop)}})();</script><script>(function(){var c=document.getElementById('moonc');if(!c)return;var R2D=Math.PI/180;
 function norm(a){a%=360;return a<0?a+360:a}
 function pos(d){var jd=d.getTime()/864e5+2440587.5,T=(jd-2451545)/36525;
